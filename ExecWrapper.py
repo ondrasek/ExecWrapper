@@ -11,6 +11,7 @@ import win32security
 import argparse
 import sys
 import string
+import os
 
 def exec_job(
 		executableFile = "",
@@ -108,6 +109,21 @@ showWindowOptions = {
 	'normal'	: win32con.SW_NORMAL
 }
 
+def read_commandline_from_file(fileName):
+	lines = open(fileName, 'r').readlines()
+	args = []
+	for line in lines:
+		## If the argument is quoted string...
+		line = string.strip(line)
+		if line[0] != '"':
+			for a in string.split(line, ' ', 1):
+				args.append(a)
+		else:
+			line = string.strip(line, '"')
+			args.append(line)
+	return args
+
+
 def init_argparser():
 	parser = argparse.ArgumentParser(description = """
 	Execute process with various constraints and restrictions. The process is terminated if the specified
@@ -170,7 +186,17 @@ def main(args):
 	sys.exit(exitCode)
 
 if __name__ == "__main__":
-	main(sys.argv[1:])
+	try:
+		## Read command line arguments from ExecWrapper.conf
+		args = read_commandline_from_file("ExecWrapper.conf")
+		print "Command line arguments read from ExecWrapper.conf"
+		print "Command line arguments: ", args
+		print "To skip ExecWrapper.conf, rename or delete it."
+		for a in sys.argv[1:]:
+			args.append(a)
+	except IOError, e:
+		args = sys.argv[1:]
+	main(args)
 
 
 
