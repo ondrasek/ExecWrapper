@@ -224,9 +224,13 @@ if __name__ == "__main__":
 	try:
 		main(args)
 
-	except:
-		print "Error in ExecWrapper: ", sys.exc_type
-		print sys.exc_info()
+	except SystemExit:
+		print "ExecWrapper finished."
+
+	else:
+		(etype, eval, estack) = sys.exc_info()
+		print "Error in ExecWrapper: %s (%s)" % (etype, eval)
+		print estack
 		print
 
 
