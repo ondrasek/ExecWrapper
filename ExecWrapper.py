@@ -5,13 +5,14 @@ import win32api
 import win32file
 import win32job
 import win32process
-import win32con
 import win32event
 import win32security
 import argparse
 import sys
 import string
-import os
+
+import win32con
+
 
 def exec_job(
 		executableFile = "",
@@ -89,8 +90,8 @@ def exec_job(
 	startupInfo.wShowWindow = showWindow
 	commandLine = string.join(commandLine, ' ')
 	hProcess = win32file.INVALID_HANDLE_VALUE
-	print "Creating process: %s with command line: %s and startup info: %s",\
-		(executableFile, commandLine, str(startupInfo))
+	print "Creating process: %s with command line: %s and startup info: %s" % \
+		  (executableFile, commandLine, str(startupInfo))
 	(hProcess, hThread, dwProcessId, dwThreadId) = win32process.CreateProcess(
 		executableFile, executableFile + ' ' + commandLine, None, None, 0,
 	    win32process.CREATE_BREAKAWAY_FROM_JOB, None, None, startupInfo)
@@ -102,10 +103,14 @@ def exec_job(
 	return (hJobObject, hProcess, hThread, dwProcessId, dwThreadId)
 
 def wait_and_kill_process(hProcess, killTimeout):
+	hasBeenTerminated = False
 	wait = win32event.WaitForSingleObjectEx(hProcess, killTimeout, True)
 	print "Waited to kill the process with result: ", wait
 	if wait == win32event.WAIT_TIMEOUT:
 		win32process.TerminateProcess(hProcess, 1)
+		hasBeenTerminated = True
+	return hasBeenTerminated
+
 
 processPriorities = {
 	'idle'			: win32process.IDLE_PRIORITY_CLASS,
@@ -184,15 +189,18 @@ def main(args):
 	print "PID: ", dwProcessId
 	print
 
+	hasBeenTerminated = False
 	if parsed.timeToWait > 0:
 		print "Waiting ", parsed.timeToWait, " miliseconds for process to finish."
-		wait_and_kill_process(hProcess, parsed.timeToWait)
-		print "Process terminated."
+		hasBeenTerminated = wait_and_kill_process(hProcess, parsed.timeToWait)
+		if hasBeenTerminated:
+			print "Process terminated."
 
 	exitCode = win32process.GetExitCodeProcess(hProcess)
 	print "Process exit code: ", exitCode
-	if exitCode == win32con.STILL_ACTIVE:  # ERROR_MORE_DATA
-		print "The process is still running."
+	if exitCode == win32con.STILL_ACTIVE:
+		if not hasBeenTerminated:
+			print "The process is still running."
 	if exitCode == 1816:  # ERROR_NOT_ENOUGH_QUOTA
 		print "The process exceeded the specified limits and was terminated."
 	win32api.CloseHandle(hProcess)
@@ -215,6 +223,7 @@ if __name__ == "__main__":
 
 	try:
 		main(args)
+
 	except:
 		print "Error in ExecWrapper: ", sys.exc_type
 		print sys.exc_info()
