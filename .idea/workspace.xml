@@ -1,24 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3205a556-322c-4f31-9bd2-b7080e6fa9c0" name="Default" comment="">
-      <change type="DELETED" beforePath="C:\Users\ondra\PycharmProjects\ExecWrapper\dist\ExecWrapper.exe" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\ondra\PycharmProjects\ExecWrapper\dist\_hashlib.pyd" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\ondra\PycharmProjects\ExecWrapper\dist\bz2.pyd" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\ondra\PycharmProjects\ExecWrapper\dist\library.zip" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\ondra\PycharmProjects\ExecWrapper\dist\python27.dll" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\ondra\PycharmProjects\ExecWrapper\dist\pywintypes27.dll" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\ondra\PycharmProjects\ExecWrapper\dist\select.pyd" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\ondra\PycharmProjects\ExecWrapper\dist\unicodedata.pyd" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\ondra\PycharmProjects\ExecWrapper\dist\win32api.pyd" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\ondra\PycharmProjects\ExecWrapper\dist\win32event.pyd" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\ondra\PycharmProjects\ExecWrapper\dist\win32file.pyd" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\ondra\PycharmProjects\ExecWrapper\dist\win32job.pyd" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\ondra\PycharmProjects\ExecWrapper\dist\win32process.pyd" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\ondra\PycharmProjects\ExecWrapper\dist\win32security.pyd" afterPath="" />
+    <list default="true" id="3205a556-322c-4f31-9bd2-b7080e6fa9c0" name="Default" comment="Reverted to 'print' and added few extra debug messages.">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ExecWrapper.zip" afterPath="$PROJECT_DIR$/ExecWrapper.zip" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ExecWrapper.py" afterPath="$PROJECT_DIR$/ExecWrapper.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/setup_py2exe.cmd" afterPath="$PROJECT_DIR$/setup_py2exe.cmd" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="GhostScriptWrapper.iws" />
@@ -48,7 +32,7 @@
       <file leaf-file-name="ExecWrapper.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ExecWrapper.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="227" column="36" selection-start="9417" selection-end="9417" vertical-scroll-proportion="0.7353914" vertical-offset="4781" max-vertical-offset="5832">
+            <state line="223" column="8" selection-start="9352" selection-end="9352" vertical-scroll-proportion="0.62954795" vertical-offset="4781" max-vertical-offset="5832">
               <folding />
             </state>
           </provider>
@@ -438,7 +422,11 @@
       <created>1394578084382</created>
       <updated>1394578084382</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Reverted to 'print' and added few extra debug messages.">
+      <created>1394578403874</created>
+      <updated>1394578403874</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -633,7 +621,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ExecWrapper.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="227" column="36" selection-start="9417" selection-end="9417" vertical-scroll-proportion="0.7353914" vertical-offset="4781" max-vertical-offset="5832">
+        <state line="223" column="8" selection-start="9352" selection-end="9352" vertical-scroll-proportion="0.62954795" vertical-offset="4781" max-vertical-offset="5832">
           <folding />
         </state>
       </provider>
