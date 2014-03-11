@@ -100,10 +100,11 @@ def exec_job(
 	return (hJobObject, hProcess, hThread, dwProcessId, dwThreadId)
 
 def wait_and_kill_process(hProcess, dwProcessId, killTimeout):
-	log.debug("Attempting to kill process: %d" %  )
+	log.debug("Attempting to kill process: %d" %  dwProcessId)
 	wait = win32event.WaitForSingleObjectEx(hProcess, killTimeout, True)
 	if wait == win32event.WAIT_TIMEOUT:
 		win32process.TerminateProcess(hProcess, 1)
+		logging.debug("Process terminated.")
 
 processPriorities = {
 	'idle'			: win32process.IDLE_PRIORITY_CLASS,
@@ -162,7 +163,7 @@ def init_argparser():
 	return parser
 
 def main(args):
-	log = logging.getLogger("ExecWrapper")
+	logging.basicConfig()
 
 	# Parse arguments.
 	parser = init_argparser()
@@ -200,6 +201,8 @@ def main(args):
 	sys.exit(exitCode)
 
 if __name__ == "__main__":
+	logging.getLogger("ExecWrapper").setLevel(9)
+
 	try:
 		log = logging.getLogger("ExecWrapper")
 		log.info("ExecWrapper " + __version__ + " started.")
