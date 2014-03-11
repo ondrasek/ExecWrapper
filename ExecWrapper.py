@@ -12,7 +12,6 @@ import argparse
 import sys
 import string
 import os
-import logging
 
 def exec_job(
 		executableFile = "",
@@ -24,21 +23,21 @@ def exec_job(
 		perJobUserTimeLimit = 0,
 		showWindow = 0
 		):
-	log = logging.getLogger("ExecWrapper.ExecJob")
-
 	## Create the job object to assign the limited process to
 	hJobObject = win32job.CreateJobObject(None, '')
+	print "Created job object to contain the wrapped executable."
 
 	## Set job restrictions
 	basicLimits = win32job.QueryInformationJobObject(hJobObject, win32job.JobObjectBasicLimitInformation)
 	basicLimits['LimitFlags'] = 0
+	print "The default set of limit flags retrieved is: ", basicLimits
 
 	# Working Set Size
 	if maxWorkingSetSize > 0:
-		log.debug("Maximum working set size limit set to: %d", maxWorkingSetSize)
 		basicLimits['MaximumWorkingSetSize'] = maxWorkingSetSize
 		basicLimits['MinimumWorkingSetSize'] = 1  # This is going to be adjusted automatically to the default minimum
 		basicLimits['LimitFlags'] += win32job.JOB_OBJECT_LIMIT_WORKINGSET
+		print "Updated limits to restrict maximum working set size to: %d bytes" % maxWorkingSetSize
 
 	# Affinity Mask
 	if cpuAffinityMask != 0:
@@ -46,25 +45,24 @@ def exec_job(
 			win32process.GetCurrentProcess())
 		basicLimits['Affinity'] = systemAffinityMask & cpuAffinityMask
 		basicLimits['LimitFlags'] += win32job.JOB_OBJECT_LIMIT_AFFINITY
-		log.debug("CPU affinity mask limit set to: %d" % basicLimits['Affinity'])
+		print "Updated limits to restrict process with CPU affinity mask: ", basicLimits['Affinity']
 
 	# Priority Class
 	basicLimits['PriorityClass'] = priorityClass
 	basicLimits['LimitFlags'] += win32job.JOB_OBJECT_LIMIT_PRIORITY_CLASS
-	log.debug("Process priority class set to: %s" % priorityClass)
+	print "Updated limits to restrict process priority class to: ", priorityClass
 
 	# Scheduling Class
 	basicLimits['SchedulingClass'] = schedulingClass
 	basicLimits['LimitFlags'] += win32job.JOB_OBJECT_LIMIT_SCHEDULING_CLASS
-	log.debug("Scheduling class set to: %s" % schedulingClass)
+	print "Updated limits to restrict process scheduling class to: ", schedulingClass
 
 	# Max User Time
 	basicLimits['PerJobUserTimeLimit'] = perJobUserTimeLimit
 	basicLimits['LimitFlags'] += win32job.JOB_OBJECT_LIMIT_JOB_TIME
-	log.debug("Per Job user time limit set to: %d" % perJobUserTimeLimit)
+	print "Updated limits to restrict user CPU time limit to: ", perJobUserTimeLimit
 
 	## Enable required privileges.
-	log.debug("Adjusting token privileges for current process to be able to set the job limits.")
 	hCurrentProcessToken = win32security.OpenProcessToken(win32process.GetCurrentProcess(),
 		win32security.TOKEN_ADJUST_PRIVILEGES | win32security.TOKEN_QUERY)
 
@@ -75,36 +73,39 @@ def exec_job(
 	privileges = [ (incBasePriorityLUID, win32security.SE_PRIVILEGE_ENABLED),
 		(incQuotaLUID, win32security.SE_PRIVILEGE_ENABLED),
 		(incWorkingSetLUID, win32security.SE_PRIVILEGE_ENABLED) ]
+	print "Requesting token privileges: ", privileges
 
 	win32security.AdjustTokenPrivileges(hCurrentProcessToken, 0, privileges)
+	print "Access token privileges adjusted."
 	win32api.CloseHandle(hCurrentProcessToken)
 
 	## Set the job limits (quota) as defined in the basicLimits dict.
 	win32job.SetInformationJobObject(hJobObject, win32job.JobObjectBasicLimitInformation, basicLimits)
+	print "Limits updated to: ", basicLimits
 
 	## Create the process with executableFile and commandLine
-	log.info("Starting the process now.")
 	startupInfo = win32process.STARTUPINFO()
 	startupInfo.dwFlags = win32con.STARTF_USESHOWWINDOW
 	startupInfo.wShowWindow = showWindow
 	commandLine = string.join(commandLine, ' ')
 	hProcess = win32file.INVALID_HANDLE_VALUE
+	print "Creating process: %s with command line: %s and startup info: %s",\
+		(executableFile, commandLine, str(startupInfo))
 	(hProcess, hThread, dwProcessId, dwThreadId) = win32process.CreateProcess(
 		executableFile, executableFile + ' ' + commandLine, None, None, 0,
 	    win32process.CREATE_BREAKAWAY_FROM_JOB, None, None, startupInfo)
 
 	## Assign the process to the job
 	win32job.AssignProcessToJobObject(hJobObject, hProcess)
-	log.info("Process started and assigned to job.")
+	print "Process assigned to restricted job objects. Limits will be enforced."
 
 	return (hJobObject, hProcess, hThread, dwProcessId, dwThreadId)
 
-def wait_and_kill_process(hProcess, dwProcessId, killTimeout):
-	log.debug("Attempting to kill process: %d" %  dwProcessId)
+def wait_and_kill_process(hProcess, killTimeout):
 	wait = win32event.WaitForSingleObjectEx(hProcess, killTimeout, True)
+	print "Waited to kill the process with result: ", wait
 	if wait == win32event.WAIT_TIMEOUT:
 		win32process.TerminateProcess(hProcess, 1)
-		logging.debug("Process terminated.")
 
 processPriorities = {
 	'idle'			: win32process.IDLE_PRIORITY_CLASS,
@@ -163,8 +164,6 @@ def init_argparser():
 	return parser
 
 def main(args):
-	logging.basicConfig()
-
 	# Parse arguments.
 	parser = init_argparser()
 	(parsed, rest) = parser.parse_known_args(args)
@@ -179,39 +178,36 @@ def main(args):
 			maxWorkingSetSize=parsed.maxWorkingSet, showWindow=showWindowOptions[parsed.showWindow],
 			perJobUserTimeLimit=parsed.maxUserTime)
 
-	log.info("Spawned process: %d" % parsed.executableFile)
-	log.info("Arguments: %s" % rest)
-	log.info("PID: %d" % dwProcessId)
+	print
+	print "Spawned process: ", parsed.executableFile
+	print "Arguments: ", rest
+	print "PID: ", dwProcessId
+	print
 
 	if parsed.timeToWait > 0:
-		log.warning("Waiting %d miliseconds for process to finish." % parsed.timeToWait)
-		wait_and_kill_process(hProcess, dwProcessId, parsed.timeToWait)
-		log.warning("Process %d terminated." % dwProcessId)
+		print "Waiting ", parsed.timeToWait, " miliseconds for process to finish."
+		wait_and_kill_process(hProcess, parsed.timeToWait)
+		print "Process terminated."
 
 	exitCode = win32process.GetExitCodeProcess(hProcess)
-	log.info("Process exit code: ", exitCode)
-	if exitCode == win32con.STILL_ACTIVE:
-		log.info("The process is still running.")
+	print "Process exit code: ", exitCode
+	if exitCode == win32con.STILL_ACTIVE:  # ERROR_MORE_DATA
+		print "The process is still running."
 	if exitCode == 1816:  # ERROR_NOT_ENOUGH_QUOTA
-		log.info("The process exceeded the specified limits and was terminated.")
+		print "The process exceeded the specified limits and was terminated."
 	win32api.CloseHandle(hProcess)
 	win32api.CloseHandle(hJobObject)
 
-	log.warning("Exiting with Exit Code: ", exitCode)
+	print "Exitting with exit code: ", exitCode
 	sys.exit(exitCode)
 
 if __name__ == "__main__":
-	logging.getLogger("ExecWrapper").setLevel(9)
-
 	try:
-		log = logging.getLogger("ExecWrapper")
-		log.info("ExecWrapper " + __version__ + " started.")
-
 		## Read command line arguments from ExecWrapper.conf
 		args = read_commandline_from_file("ExecWrapper.conf")
-		log.warning("Command line arguments read from ExecWrapper.conf")
-		log.warning("Command line arguments: %s" % args)
-		log.warning("To skip ExecWrapper.conf, rename or delete it.")
+		print "Command line arguments read from ExecWrapper.conf"
+		print "Command line arguments: ", args
+		print "To skip ExecWrapper.conf, rename or delete it."
 		for a in sys.argv[1:]:
 			args.append(a)
 	except IOError, e:
