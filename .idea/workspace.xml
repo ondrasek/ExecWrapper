@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="3205a556-322c-4f31-9bd2-b7080e6fa9c0" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ExecWrapper.py" afterPath="$PROJECT_DIR$/ExecWrapper.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="GhostScriptWrapper.iws" />
@@ -33,7 +32,7 @@
       <file leaf-file-name="ExecWrapper.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ExecWrapper.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="96" column="26" selection-start="3793" selection-end="3793" vertical-scroll-proportion="0.33207548" vertical-offset="2128" max-vertical-offset="5472">
+            <state line="220" column="13" selection-start="9293" selection-end="9293" vertical-scroll-proportion="0.8941566" vertical-offset="4469" max-vertical-offset="5520">
               <folding>
                 <element signature="e#79#94#0" expanded="true" />
               </folding>
@@ -160,6 +159,22 @@
     <property name="recentsLimit" value="5" />
     <property name="restartRequiresConfirmation" value="true" />
     <property name="FullScreen" value="false" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="262" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="262" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="262" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder2" value="2" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="937" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder3" value="3" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="266" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder0" value="0" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="255" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder1" value="1" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="261" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder2" value="2" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="941" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder3" value="3" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
@@ -384,21 +399,29 @@
       <created>1394568417255</created>
       <updated>1394568417255</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Replaced stdout (print) with the logging library.">
+      <created>1394569256530</created>
+      <updated>1394569256530</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Reverted to 'print' and added few extra debug messages.">
+      <created>1394572299038</created>
+      <updated>1394572299038</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1811" height="1101" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32921812" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.39852008" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39852008" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32980973" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1779806" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -426,33 +449,34 @@
     </option>
     <MESSAGE value="Updated to merge arguments from command line with those read from file. The command line arguments are appended to those read from ExecWrapper.conf." />
     <MESSAGE value="Replaced stdout (print) with the logging library." />
-    <option name="LAST_COMMIT_MESSAGE" value="Replaced stdout (print) with the logging library." />
+    <MESSAGE value="Reverted to 'print' and added few extra debug messages." />
+    <option name="LAST_COMMIT_MESSAGE" value="Reverted to 'print' and added few extra debug messages." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="python-line">
           <url>file://$PROJECT_DIR$/ExecWrapper.py</url>
-          <line>168</line>
+          <line>167</line>
         </line-breakpoint>
         <line-breakpoint enabled="true" type="python-line">
           <url>file://$PROJECT_DIR$/ExecWrapper.py</url>
-          <line>29</line>
+          <line>25</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="python-line">
           <url>file://$PROJECT_DIR$/ExecWrapper.py</url>
-          <line>90</line>
+          <line>88</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="python-line">
           <url>file://$PROJECT_DIR$/ExecWrapper.py</url>
-          <line>205</line>
+          <line>201</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="python-line">
           <url>file://$PROJECT_DIR$/ExecWrapper.py</url>
-          <line>190</line>
+          <line>188</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
@@ -566,7 +590,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ExecWrapper.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="96" column="26" selection-start="3793" selection-end="3793" vertical-scroll-proportion="0.33207548" vertical-offset="2128" max-vertical-offset="5472">
+        <state line="220" column="13" selection-start="9293" selection-end="9293" vertical-scroll-proportion="0.8941566" vertical-offset="4469" max-vertical-offset="5520">
           <folding>
             <element signature="e#79#94#0" expanded="true" />
           </folding>

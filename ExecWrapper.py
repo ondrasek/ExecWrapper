@@ -212,7 +212,13 @@ if __name__ == "__main__":
 			args.append(a)
 	except IOError, e:
 		args = sys.argv[1:]
-	main(args)
+
+	try:
+		main(args)
+	except:
+		print "Error in ExecWrapper: ", sys.exc_type
+		print sys.exc_info()
+		print
 
 
 
